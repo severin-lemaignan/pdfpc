@@ -24,7 +24,7 @@ using GLib;
 
 using org.westhoffswelt.pdfpresenter;
 
-namespace org.westhoffswelt.pdfpresenter.View.Behaviour {
+namespace org.westhoffswelt.pdfpresenter {
     /**
      * Behaviour which handles links inside of Pdf based Views
      */

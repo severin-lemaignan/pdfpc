@@ -24,7 +24,7 @@ using GLib;
 
 using org.westhoffswelt.pdfpresenter;
 
-namespace org.westhoffswelt.pdfpresenter.View {
+namespace org.westhoffswelt.pdfpresenter {
     /**
      * Every View which supports Behaviours needs to implement this interface.
      *

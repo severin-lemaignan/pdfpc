@@ -21,12 +21,14 @@
  */
 
 using GLib;
+using Gdk;
 
 namespace org.westhoffswelt.pdfpresenter {
+
     /**
      * Base class for every slide view
      */
-    public abstract class View.Base: Gtk.DrawingArea {
+    public class View: Gtk.DrawingArea {
         /**
          * Signal fired every time a slide is about to be left
          */
@@ -45,13 +47,41 @@ namespace org.westhoffswelt.pdfpresenter {
         /**
          * Base constructor taking the renderer to use as an argument
          */
-        protected Base( Renderer.Base renderer ) {
+        protected View( Renderer.Base renderer ) {
             this.renderer = renderer;
             this.set_size_request( 
                 renderer.get_width(),
                 renderer.get_height()
             );
         }
+
+        /**
+         * Create a new Pdf view directly from a file
+         *
+         * This is a convenience constructor which automatically create a full
+         * metadata and rendering chain to be used with the pdf view. The given
+         * width and height is used in conjunction with a scaler to maintain
+         * aspect ration. The scale rectangle is provided in the scale_rect
+         * argument.
+         */
+        public static View from_metadata( Metadata.Pdf metadata, int width, int height, bool allow_black_on_end,
+                                          PresentationController presentation_controller,
+                                          out Rectangle scale_rect = null ) {
+            var scaler = new Scaler( 
+                metadata.get_page_width(),
+                metadata.get_page_height()
+            );
+            scale_rect = scaler.scale_to( width, height );
+            var renderer = new Renderer.Pdf( 
+                metadata,
+                scale_rect.width,
+                scale_rect.height
+            );
+            
+            //return new View( renderer, allow_black_on_end, presentation_controller );
+            return new View( renderer );
+        }
+    
         
         /**
          * Return the used renderer object
@@ -61,57 +91,27 @@ namespace org.westhoffswelt.pdfpresenter {
         }
 
         /**
-         * Goto the next slide
-         *
-         * If the end of slides is reached this method is expected to do
-         * nothing.
-         */
-        //public abstract void next();
-
-        /**
-         * Go forward 10 slides
-         *
-         * If the end of slides is reached this method is expected to do
-         * nothing.
-         */
-        //public abstract void jumpN( int n );
-
-        /**
-         * Goto the previous slide
-         *
-         * If the beginning of slides is reached this method is expected to do
-         * nothing.
-         */
-        //public abstract void previous();
-
-        /**
-         * Go back 10 slides
-         *
-         * If the beginning of slides is reached this method does nothing.
-         */
-        //public abstract void backN( int n );
-
-        /**
          * Goto a specific slide number
          *
          * If the slide number does not exist a RenderError.SLIDE_DOES_NOT_EXIST is thrown
          */
-        public abstract void display( int slide_number, bool force_redraw=false )
-            throws Renderer.RenderError;
+        public void display( int slide_number, bool force_redraw=false )
+            throws Renderer.RenderError {
+        }
 
         /**
          * Make the screen black. Useful for presentations together with a whiteboard
          */
-        public abstract void fade_to_black();
+        public void fade_to_black() {}
 
         /**
          * Redraw the current slide. Useful for example when exiting from fade_to_black
          */
-        public abstract void redraw() throws Renderer.RenderError;
+        public void redraw() throws Renderer.RenderError {}
 
         /**
          * Return the currently shown slide number
          */
-        public abstract int get_current_slide_number();
+        public int get_current_slide_number() { return 1; }
     }
 }

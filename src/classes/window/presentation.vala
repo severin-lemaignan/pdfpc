@@ -39,7 +39,7 @@ namespace org.westhoffswelt.pdfpresenter.Window {
         /**
          * View containing the slide to show
          */
-        protected View.Base view;
+        protected View view;
 
         /**
          * Base constructor instantiating a new presentation window
@@ -63,7 +63,7 @@ namespace org.westhoffswelt.pdfpresenter.Window {
             
             Rectangle scale_rect;
             
-            this.view = View.Pdf.from_metadata( 
+            this.view = View.from_metadata( 
                 metadata,
                 this.screen_geometry.width, 
                 this.screen_geometry.height,
@@ -197,10 +197,10 @@ namespace org.westhoffswelt.pdfpresenter.Window {
          * cache status measurements.
          */
         public void set_cache_observer( CacheStatus observer ) {
-            var prerendering_view = this.view as View.Prerendering;
-            if( prerendering_view != null ) {
-                observer.monitor_view( prerendering_view );
-            }
+            //var prerendering_view = this.view as View.Prerendering;
+            //if( prerendering_view != null ) {
+            //    observer.monitor_view( prerendering_view );
+            //}
         }
     }
 }

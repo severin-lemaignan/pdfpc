@@ -42,18 +42,18 @@ namespace org.westhoffswelt.pdfpresenter.Window {
         /**
          * View showing the current slide
          */
-        protected View.Base current_view;
+        protected View current_view;
 
         /**
          * View showing a preview of the next slide
          */
-        protected View.Base next_view;
+        protected View next_view;
 
         /**
          * Small views for (non-user) next slides
          */
-        protected View.Base strict_next_view;
-        protected View.Base strict_prev_view;
+        protected View strict_next_view;
+        protected View strict_prev_view;
 
         /**
          * Timer for the presenation
@@ -149,7 +149,7 @@ namespace org.westhoffswelt.pdfpresenter.Window {
             int current_allocated_width = (int)Math.floor( 
                 this.screen_geometry.width * Options.current_size / (double)100 
             );
-            this.current_view = View.Pdf.from_metadata( 
+            this.current_view = View.from_metadata( 
                 metadata,
                 current_allocated_width,
                 (int)Math.floor(0.8*bottom_position),
@@ -165,7 +165,7 @@ namespace org.westhoffswelt.pdfpresenter.Window {
             current_allocated_width = cv_requisition.width;
             Rectangle next_scale_rect;
             var next_allocated_width = this.screen_geometry.width - current_allocated_width-4; // We leave a bit of margin between the two views
-            this.next_view = View.Pdf.from_metadata( 
+            this.next_view = View.from_metadata( 
                 metadata,
                 next_allocated_width,
                 bottom_position,
@@ -174,7 +174,7 @@ namespace org.westhoffswelt.pdfpresenter.Window {
                 out next_scale_rect
             );
 
-            this.strict_next_view = View.Pdf.from_metadata(
+            this.strict_next_view = View.from_metadata(
                 metadata,
                 (int)Math.floor(0.5*current_allocated_width),
                 (int)Math.floor(0.2*bottom_position) - 2,
@@ -182,7 +182,7 @@ namespace org.westhoffswelt.pdfpresenter.Window {
                 this.presentation_controller,
                 out next_scale_rect
             );
-            this.strict_prev_view = View.Pdf.from_metadata(
+            this.strict_prev_view = View.from_metadata(
                 metadata,
                 (int)Math.floor(0.5*current_allocated_width),
                 (int)Math.floor(0.2*bottom_position) - 2,
@@ -563,19 +563,19 @@ namespace org.westhoffswelt.pdfpresenter.Window {
          * for display, as it is a Image widget after all.
          */
         public void set_cache_observer( CacheStatus observer ) {
-            var current_prerendering_view = this.current_view as View.Prerendering;
-            if( current_prerendering_view != null ) {
-                observer.monitor_view( current_prerendering_view );
-            }
-            var next_prerendering_view = this.next_view as View.Prerendering;
-            if( next_prerendering_view != null ) {
-                observer.monitor_view( next_prerendering_view );
-            }
-            
-            //observer.register_entry( this.slide_progress );
-            //observer.register_update( this.prerender_progress.set_fraction, () => this.prerender_progress.hide() );
-            observer.register_update( this.prerender_progress.set_fraction, this.prerender_finished );
-            this.prerender_progress.show();
+            //var current_prerendering_view = this.current_view as View.Prerendering;
+            //if( current_prerendering_view != null ) {
+            //    observer.monitor_view( current_prerendering_view );
+            //}
+            //var next_prerendering_view = this.next_view as View.Prerendering;
+            //if( next_prerendering_view != null ) {
+            //    observer.monitor_view( next_prerendering_view );
+            //}
+            //
+            ////observer.register_entry( this.slide_progress );
+            ////observer.register_update( this.prerender_progress.set_fraction, () => this.prerender_progress.hide() );
+            //observer.register_update( this.prerender_progress.set_fraction, this.prerender_finished );
+            //this.prerender_progress.show();
         }
 
         public void prerender_finished() {
