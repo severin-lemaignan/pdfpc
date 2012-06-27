@@ -70,27 +70,24 @@ The most relevant features of pdfpc are:
     <li>Timer or countdown showing remaining time in the presentation</li>
     <li>Overview mode for quick switching between slides</li>
     <li>Freezing and turning off the presentation view</li>
+    <li>Customizable keybindings, enabling support for different presenter devices</li>
 </ul>
-See the <a href="manpage.html">man page</a> for mode details.
+See the <a href="manpage.html">man page</a> for more details.
 <p>
 To get a better feeling of pdfpc, install it, download the <a
     href=https://github.com/downloads/davvil/pdfpc/pdfpc-demo.pdf>demo presentation</a> and start it with
 <pre><code>pdfpc pdfpc-demo.pdf</code></pre>
 
-<h1>Installation</h1>
+ <h1>News</h1>
+ <ul>
+   <li>June 2012: pdfpc 3.1 released</li>
+   <li>May 2012: pdfpc 3.0 released</li>
+</ul>
 
-Download <a
-    href="https://github.com/downloads/davvil/pdfpc/pdfpc-3.0.tgz">pdfpc-3.0.tgz</a>.
-<p>
-If you use <a href="http://www.archlinux.org">Arch Linux</a>, you can
-download the <a
-    href="https://aur.archlinux.org/packages.php?ID=59204">AUR</a> package.
-<p>
-You can also get the bleeding-edge version from <a
-    href="https://github.com/davvil/pdfpc">github</a> (or <a
-    href="https://aur.archlinux.org/packages.php?ID=58957">AUR</a>).
 
-<h3>Dependencies</h3>
+<h1>Getting pdfpc</h1>
+
+<h3>Compiling from source</h3>
 
 In order to compile and run pdfpc the following requirements need to be
 met:
@@ -102,6 +99,9 @@ met:
 </ul>
 
 <h3>Compile and install</h3>
+
+Download <a
+    href="https://github.com/downloads/davvil/pdfpc/pdfpc-3.0.tgz">pdfpc-3.0.tgz</a>.
 
 Uncompress the tarball (we use v3.0 as an example here)
 
@@ -120,17 +120,44 @@ sudo make install </pre></code>
 If there are no errors in the process, you just installed pdfpc on your system.
 Congratulations! If there were errors, they are probably due to missing
 dependencies. Please check that you have all the necessary libraries (in some
-distributions you may have to install *-devel* packages).
+distributions you may have to install *-devel packages).
 <p>
 Note: You may alter the final installation prefix in the cmake call. By default
-the pdfpc files will be installed under */usr/local/*. If you want to change
-that, for example to be installed under */usr/* you may specify another
-installation prefix as follows::
+the pdfpc files will be installed under /usr/local/. If you want to change
+that, for example to be installed under /usr/, with config files under
+/etc/ you may specify another installation prefix as follows:
 
-<pre><code>cmake -DCMAKE_INSTALL_PREFIX="/usr" .  </pre></code>
+<pre><code>cmake -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONFDIR=/etc .  </pre></code>
+
+<h3>Alternatives</h3>
+
+If you use <a href="http://www.archlinux.org">Arch Linux</a>, you can
+download the <a
+    href="https://aur.archlinux.org/packages.php?ID=59204">AUR</a> package.
+<p>
+You can also get the bleeding-edge version from <a
+    href="https://github.com/davvil/pdfpc">github</a> (or <a
+    href="https://aur.archlinux.org/packages.php?ID=58957">AUR</a>).
 
 For compiling the git version, follow the instructions given in the <a
     href="https://github.com/davvil/pdfpc">github</a> page.
+
+<h1>Config files</h1>
+The keybindings of pdfpc can be customized by writing a config file, see the
+<a href="manpage.html">man page</a> for details. For certain devices,
+like wireless presenters, configuration files are readily available:
+<ul>
+  <li><a href="https://github.com/downloads/davvil/pdfpc/rcfile-logitech">Logitech
+  wireless presenter</a></li>
+  <li><a href="https://github.com/downloads/davvil/pdfpc/rcfile-headset">Bluetooth
+  headest</a>: you can use the "next song" and "previous song" buttons
+  for navigating through the slides</li>
+</ul>
+If you have one of these devices, download the corresponding file and
+save it as &#126;&#47;.pdfpcrc.
+<p>
+ If you have a device not listed above and would like to contribute a
+ config file, we will be happy to add it to this site.
 
 <h1>Acknowledgements</h1>
 pdfpc is a fork of <a href="http://westhoffswelt.de/projects/pdf_presenter_console.html">pdf presenter console</a> by Jakob Westhoff, extended with additional features.
