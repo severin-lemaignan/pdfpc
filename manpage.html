@@ -3,10 +3,14 @@
 <TITLE>pdfpc man page</TITLE>
 </HEAD>
 <BODY>
+<H1>pdfpc man page</H1>
+<HR>
+<PRE>
 <!-- Manpage converted by man2html 3.0.1 -->
 
 
 
+</PRE>
 <H2>SYNOPSIS</H2><PRE>
        <B>pdfpc</B> [options] PDF-file
 
@@ -44,13 +48,13 @@
        <B>-e,</B> <B>--end-time</B><I>=T</I>
               End time of the presentation. (Format: HH:MM (24h))
 
-       <B>-t,</B> <B>--start-time</B><I>=T</I>
-              Start  time of the presentation to be used as a countdown. (For‐
-              mat: HH:MM (24h))
-
        <B>-l,</B> <B>--last-minutes</B><I>=N</I>
-              Time in minutes, from which on  the  timer  changes  its  color.
+              Time  in  minutes,  from  which  on the timer changes its color.
               (Default 5 minutes)
+
+       <B>-t,</B> <B>--start-time</B><I>=T</I>
+              Start time of the presentation to be used as a countdown.  (For‐
+              mat: HH:MM (24h))
 
        <B>-u,</B> <B>--current-size</B><I>=N</I>
               Percentage  of  the  presenter screen to be used for the current
@@ -63,6 +67,9 @@
        <B>-s,</B> <B>--switch-screens</B>
               Force to use only one screen
 
+       <B>-L,</B> <B>--list-actions</B>
+              List actions supported in the config file(s)
+
        <B>-h,</B> <B>--help</B>
               Shows the help
 
@@ -70,8 +77,7 @@
 
 </PRE>
 <H2>KEYBINDINGS</H2><PRE>
-       During the presentation following key strokes and mouse clicks are sup‐
-       ported:
+       These are the default keybindings for pdfpc:
 
        <B>Right</B> <B>cursor</B> <B>key</B> <B>/</B> <B>Page</B> <B>down</B> <B>/</B> <B>Return</B> <B>/</B> <B>Space</B> <B>/</B> <B>Left</B> <B>mouse</B> <B>button</B>
               Go forward one slide
@@ -81,7 +87,7 @@
               Go forward 10 slides
 
        <B>Down</B> <B>cursor</B> <B>key</B>
-              Go forward one user slide (see section about overlays below)
+              Go forward one user slide (see <B>Overlays</B> below)
 
        <B>Left</B> <B>cursor</B> <B>key</B> <B>/</B> <B>Page</B> <B>up</B> <B>/</B> <B>Right</B> <B>mouse</B> <B>button</B> <B>/</B> <B>Mouse</B> <B>wheel</B> <B>up</B> <B>or</B> <B>left</B>
               Go back one slide
@@ -90,97 +96,100 @@
               Go back 10 slides
 
        <B>Up</B> <B>cursor</B> <B>key</B>
-              Go back one "user slide" (see section about overlays below)
+              Go back one "user slide" (see <B>Overlays</B> below)
 
        <B>Home</B>   Go to the first slide
 
        <B>End</B>    Go to the last slide
 
        <B>Backspace</B>
-              Go  back in history. Note that history is defined by "jump" com‐
+              Go back in history. Note that history is defined by "jump"  com‐
               mands, not by normal slide movement.
 
-       <B>Tab</B>    Toggle overview mode
+       <B>Tab</B> <B>/</B> <B>Middle</B> <B>mouse</B> <B>button</B>
+              Overview mode
 
        <B>g</B>      Input a slide number to jump to
 
        <B>Escape</B> <B>/</B> <B>q</B>
               Exit pdfpc
 
-       <B>b</B>      Turn off the presentation view  (i.e.   fill  it  with  a  black
+       <B>b</B>      Turn  off  the  presentation  view  (i.e.   fill it with a black
               color)
 
        <B>n</B>      Edit note for current slide
 
-       <B>f</B>      Freeze  the  current presentation display (the presenter display
-              is still fully active)
 
-       tom  of  the  presenter screen indicates how many percent of the slides
-       have been pre-rendered already.  During  the  initial  rendering  phase
-       this  will  slow-down  slide changes, as most cpu power is used for the
-       rendering process in the background.  After the cache is  fully  primed
-       however  the  changing  of slides should be much faster, as with normal
+
+</PRE>
+<H2>FEATURES</H2><PRE>
+   <B>Caching</B> <B>/</B> <B>Prerendering</B>
+       To allow fast changes between the different slides of the  presentation
+       the  pdf pages are prerendered to memory.  The progress bar on the bot‐
+       tom of the presenter screen indicates how many percent  of  the  slides
+       have  been  pre-rendered  already.   During the initial rendering phase
+       this will slow-down slide changes, as most cpu power is  used  for  the
+       rendering  process  in the background.  After the cache is fully primed
+       however the changing of slides should be much faster,  as  with  normal
        pdf viewers.
 
-       As the prerendering takes a lot of memory it can be disabled using  the
+       As  the prerendering takes a lot of memory it can be disabled using the
        --disable-cache switch at the cost of speed.
 
    <B>Cache</B> <B>compression</B>
-       The  prerendered  and cached slides can be compressed in memory to save
-       up some memory.  Without compression a set of about 100 pdf  pages  can
-       easily  grow  up to about 1.5gb size.  Netbooks with only 1gb of memory
-       would swap themselves to death if prerendering is  enabled  in  such  a
-       situation.   The  compression is enabled by default as it does not harm
-       rendering speed in a noticeable way on most systems.  It  does  however
+       The prerendered and cached slides can be compressed in memory  to  save
+       up  some  memory.  Without compression a set of about 100 pdf pages can
+       easily grow up to about 1.5gb size.  Netbooks with only 1gb  of  memory
+       would  swap  themselves  to  death if prerendering is enabled in such a
+       situation.  The compression is enabled by default as it does  not  harm
+       rendering  speed  in a noticeable way on most systems.  It does however
        slows down prerendering by about a factor of 2.  If you have got enough
-       memory and want to ensure the fastest  possible  prerendering  you  can
-       disable  slide  compression by using the -z switch. But be warned using
-       the uncompressed prerendering storage will use about 30 times the  mem‐
-       ory  the  new  compressed  storage utilizes (aka the 1.5gb become about
+       memory  and  want  to  ensure the fastest possible prerendering you can
+       disable slide compression by using the -z switch. But be  warned  using
+       the  uncompressed prerendering storage will use about 30 times the mem‐
+       ory the new compressed storage utilizes (aka  the  1.5gb  become  about
        50mb)
 
 
-
    <B>Timer</B>
-       If a duration is given (-d option), the timer  will  show  a  countdown
-       with  the given parameters.  If no duration is specified (or if a value
-       of 0 is given to the -d option), the timer will show how much time  has
-       been  spent.   The duration is stored automatically, so you do not need
+       If  a  duration  is  given (-d option), the timer will show a countdown
+       with the given parameters.  If no duration is specified (or if a  value
+       of  0 is given to the -d option), the timer will show how much time has
+       been spent.  The duration is stored automatically, so you do  not  need
        to repeat it for every invocation.
 
        The timer is started if you are navigating away from the first page for
-       the  first  time.  This feature is quite useful as you may want to show
-       the titlepage of your presentation while people are still entering  the
-       room  and  the  presentation  hasn't  really begun yet.  If you want to
-       start over you can use the r key which will make  the  presenter  reset
+       the first time.  This feature is quite useful as you may want  to  show
+       the  titlepage of your presentation while people are still entering the
+       room and the presentation hasn't really begun  yet.   If  you  want  to
+       start  over  you  can use the r key which will make the presenter reset
        the timer.
 
-       If  a  duration  is  given, at the moment the timer reaches the defined
-       last-minutes value it will change color to indicate your talk is  near‐
-       ing  its end.  As soon as the timer reaches the zero mark (00:00:00) it
-       will turn red and count further down showing a negative time,  to  pro‐
+       If a duration is given, at the moment the  timer  reaches  the  defined
+       last-minutes  value it will change color to indicate your talk is near‐
+       ing its end.  As soon as the timer reaches the zero mark (00:00:00)  it
+       will  turn  red and count further down showing a negative time, to pro‐
        vide information on how many minutes you are overtime.
 
 
    <B>Notes</B>
-       Textual  notes can be displayed for each slide.  While in the presenta‐
-       tion, pressing n will allow you to take notes for the  screen.   To  go
-       out  of  editing mode, press the Escape key.  Note that while editing a
-       note the keybindings stop working, i.e.  you are  not  able  to  change
+       or with the arrow keys.  You can also define overlays and the end slide
+       (see next sections) in this mode.
+
 
    <B>Overlays</B>
        Many slide preparation systems allow for overlays, i.e.  sets of slides
        that are logically grouped together as a single, changing slide.  Exam‐
-       ples include enumerations where the  single  items  are  displayed  one
-       after  another  or  rough "animations", where parts of a picture change
-       from slide to slide.  Pdf Presenter  Console  includes  facilities  for
+       ples  include  enumerations  where  the  single items are displayed one
+       after another or rough "animations", where parts of  a  picture  change
+       from  slide  to  slide.   Pdf Presenter Console includes facilities for
        dealing with such overlays.
 
-       In  this  description,  we  will  differentiation  between slides (i.e.
-       pages in the pdf document) and "user  slides",  that  are  the  logical
+       In this description,  we  will  differentiation  between  slides  (i.e.
+       pages  in  the  pdf  document)  and "user slides", that are the logical
        slides.  The standard forward movement command (page down, enter, etc.)
-       moves through one slide at a time, as expected.  That means that  every
-       step  in the overlay is traversed.  The backward movement command works
+       moves  through one slide at a time, as expected.  That means that every
+       step in the overlay is traversed.  The backward movement command  works
        differently depending if the current and previous slides are part of an
        overlay:
 
@@ -190,53 +199,86 @@
          jump forward and backward through the single steps of it
 
        · If the current slide is not part of an overlay (or if it is the first
-         one), but the previous slides are,  we  jump  to  the  previous  user
-         slide.   This  means  that when going back in the presentation you do
-         not have to go through every step of the overlay, Pdf Presenter  Con‐
+         one),  but  the  previous  slides  are,  we jump to the previous user
+         slide.  This means that when going back in the  presentation  you  do
+         not  have to go through every step of the overlay, Pdf Presenter Con‐
          sole just shows the first slide of the each overlay.  As you normally
-         only go back in a presentation when looking  for  a  concrete  slide,
+         only  go  back  in  a presentation when looking for a concrete slide,
          this is more convenient.
 
-       The  up  and  down cursor keys work on a user slide basis.  You can use
-       them to skip the rest of an overlay or to jump  to  the  previous  user
+       The up and down cursor keys work on a user slide basis.   You  can  use
+       them  to  skip  the  rest of an overlay or to jump to the previous user
        slide, ignoring the state of the current slide.
 
        When going through an overlay, two additional previews may be activated
-       in the presenter view, just below the main view, showing the  next  and
+       in  the  presenter view, just below the main view, showing the next and
        the previous slide in an overlay.
 
-       Pdf  Presenter  Console  tries  to find these overlays automatically by
-       looking into the page labels in the pdf file.   For  LaTeX  this  works
-       correctly  at  least  with the beamer class and also modifying the page
-       numbers manually (compiling with pdflatex).  If your  preferred  slide-
-       producing  method  does not work correctly with this detection, you can
-       supply this information using the o key for each slide that is part  of
-       an  overlay  (except  the  first  one!).   The  page  numbering is also
+       Pdf Presenter Console tries to find  these  overlays  automatically  by
+       looking  into  the  page  labels in the pdf file.  For LaTeX this works
+       correctly at least with the beamer class and also  modifying  the  page
+       numbers  manually  (compiling with pdflatex).  If your preferred slide-
+       producing method does not work correctly with this detection,  you  can
+       supply  this information using the o key for each slide that is part of
+       an overlay (except  the  first  one!).   The  page  numbering  is  also
        adapted.  This information is automatically stored.
 
 
    <B>End</B> <B>slide</B>
-       Some people like to have some additional, backup slides after the  last
-       slide in the actual presentation.  Things like bibliographic references
-       or slides referring to specialized questions are typical examples.  Pdf
-       Presenter Console lets you define which is the last slide in the actual
+
+       There  are however cases where you may want to edit the files manually.
+       The most typical case is if you add or remove  some  slides  after  you
+       have  edited  notes or defined overlays.  It may be quicker to edit the
        pdfpc file than to re-enter the whole information.  Future versions may
        include external tools for dealing with this case automatically.
 
-       The files are plain-text files that should be fairly  self-explanatory.
-       A  couple  of  things to note - The slide numbers of the notes refer to
-       user slides - The [notes] sections must be the last one in the  file  -
-       For the programmers out there: slide indexes start at 1
+       The  files are plain-text files that should be fairly self-explanatory.
+       A couple of things to note:
 
+       · The slide numbers of the notes refer to user slides
+
+       · The [notes] sections must be the last one in the file
+
+       · For the programmers out there: slide indexes start at 1
 
 
 </PRE>
-<H2>BUGS</H2><PRE>
-       There  may  be a small memory leak in the program. I am trying to solve
-       it. It should not be too important for up to some hundreds of slides.
+<H2>CONFIG FILE</H2><PRE>
+       The main configuration file for pdfpc is located in /usr/local/etc/pdf‐
+       pcrc.  Additionally, $HOME/.pdfpcrc is also read, if present. Following
+       commands are aceepted
 
-       Other bugs can be reported at <I>https://github.com/davvil/pdfpc/issues</I>
+       <B>bind</B> <B>&lt;key&gt;</B> <B>&lt;func&gt;</B>
+              Bind a key to a function
 
+       <B>unbind</B> <B>&lt;key&gt;</B>
+              Unbinds the given key
+
+       <B>unbind_all</B>
+              Unbinds all the keybindings
+
+       <B>mouse</B> <B>&lt;button&gt;</B> <B>&lt;func&gt;</B>
+              Binds a mouse button to a function
+
+       <B>unmouse</B> <B>&lt;button&gt;</B>
+              Unbinds a mouse button
+
+       <B>unmouse_all</B>
+              Unbinds all the mouse bindings
+
+       <B>switch-screens</B>
+              Switches screens, in the same way as the command line  parameter
+              with the same name.
+
+       Key  names  can be obtained with the help of the xev utility. Note that
+       names are case sensitive.  Modifiers  can  be  specified  in  the  form
+       &lt;mod&gt;+&lt;key&gt;  where  &lt;mod&gt;  is one of S (for shift), C (for control) and
+       A/M (for Alt/Meta). E.g.
+
+       bind S+Next    next10
+
+       A list of all possible functions can be obtained  via  the  -L  command
+       line option.
 
 
 </PRE>
@@ -252,7 +294,7 @@
 
 
 
-                                   May 2012                           <B>pdfpc(1)</B>
+                                   Jun 2012                           <B>pdfpc(1)</B>
 </PRE>
 <HR>
 <ADDRESS>
