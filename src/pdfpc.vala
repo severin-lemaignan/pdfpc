@@ -84,7 +84,7 @@ namespace pdfpc {
          *
 		 * Returns the name of the pdf file to open (or null if not present)
          */
-        protected string? parse_command_line_options( string[] args ) {
+        protected string? parse_command_line_options( ref unowned string[] args ) {
             var context = new OptionContext( "<pdf-file>" );
 
             context.add_main_entries( options, null );
@@ -139,9 +139,11 @@ namespace pdfpc {
 
             Gdk.threads_init();
             Gtk.init( ref args );
+
+            string pdfFilename = this.parse_command_line_options( ref args );
+
             Gst.init( ref args );
 
-            string pdfFilename = this.parse_command_line_options( args );
             if (Options.list_actions) {
 				stdout.printf("Config file commands accepted by pdfpc:\n");
 				string[] actions = PresentationController.getActionDescriptions();
