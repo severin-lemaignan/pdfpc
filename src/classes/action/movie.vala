@@ -101,12 +101,13 @@ namespace pdfpc {
             movie.temp = temp ? uri.substring(7) : "";
             GLib.Idle.add( () => {
                 movie.establish_pipeline(uri);
-                if (start != 0) {
-                    movie.pipeline.set_state(State.PAUSED);
-                    // waits until the pipeline is actually in PAUSED mode
-                    movie.pipeline.get_state(null, null, Gst.CLOCK_TIME_NONE);
-                    movie.pipeline.seek_simple(Gst.Format.TIME, SeekFlags.FLUSH, movie.starttime * Gst.SECOND);
-                }
+
+                // initial seek to set the starting point. *Cause the video to
+                // be displayed on the page*.
+                movie.pipeline.set_state(State.PAUSED);
+                // waits until the pipeline is actually in PAUSED mode
+                movie.pipeline.get_state(null, null, Gst.CLOCK_TIME_NONE);
+                movie.pipeline.seek_simple(Gst.Format.TIME, SeekFlags.FLUSH, movie.starttime * Gst.SECOND);
 
                 if (autostart)
                     movie.play();
